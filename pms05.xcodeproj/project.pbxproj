@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59161B681FF717A1008D9A49 /* PersonEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B671FF717A1008D9A49 /* PersonEditViewController.swift */; };
+		59161B6A1FF7D670008D9A49 /* HideKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B691FF7D670008D9A49 /* HideKeyBoard.swift */; };
+		59161B6E1FF7E895008D9A49 /* PersonAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B6D1FF7E895008D9A49 /* PersonAddViewController.swift */; };
+		59161B701FF80487008D9A49 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B6F1FF80487008D9A49 /* ProjectViewController.swift */; };
+		59161B721FF804B6008D9A49 /* ProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B711FF804B6008D9A49 /* ProjectCell.swift */; };
+		59161B741FF804C5008D9A49 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B731FF804C5008D9A49 /* Project.swift */; };
+		59161B761FF80C0C008D9A49 /* ProjectEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B751FF80C0C008D9A49 /* ProjectEditViewController.swift */; };
 		59C026801FF5628600171CF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C0267F1FF5628600171CF8 /* AppDelegate.swift */; };
 		59C026821FF5628600171CF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C026811FF5628600171CF8 /* ViewController.swift */; };
 		59C026851FF5628600171CF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59C026831FF5628600171CF8 /* Main.storyboard */; };
@@ -29,6 +36,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		59161B671FF717A1008D9A49 /* PersonEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonEditViewController.swift; sourceTree = "<group>"; };
+		59161B691FF7D670008D9A49 /* HideKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyBoard.swift; sourceTree = "<group>"; };
+		59161B6D1FF7E895008D9A49 /* PersonAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonAddViewController.swift; sourceTree = "<group>"; };
+		59161B6F1FF80487008D9A49 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
+		59161B711FF804B6008D9A49 /* ProjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCell.swift; sourceTree = "<group>"; };
+		59161B731FF804C5008D9A49 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		59161B751FF80C0C008D9A49 /* ProjectEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectEditViewController.swift; sourceTree = "<group>"; };
 		59C0267C1FF5628600171CF8 /* pms05.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pms05.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59C0267F1FF5628600171CF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59C026811FF5628600171CF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +106,13 @@
 				59C026A91FF68DB900171CF8 /* PersonCell.swift */,
 				59C026AD1FF6904600171CF8 /* PersonViewController.swift */,
 				59C026AF1FF6EAFB00171CF8 /* Person.swift */,
+				59161B671FF717A1008D9A49 /* PersonEditViewController.swift */,
+				59161B6D1FF7E895008D9A49 /* PersonAddViewController.swift */,
+				59161B691FF7D670008D9A49 /* HideKeyBoard.swift */,
+				59161B6F1FF80487008D9A49 /* ProjectViewController.swift */,
+				59161B711FF804B6008D9A49 /* ProjectCell.swift */,
+				59161B731FF804C5008D9A49 /* Project.swift */,
+				59161B751FF80C0C008D9A49 /* ProjectEditViewController.swift */,
 			);
 			path = pms05;
 			sourceTree = "<group>";
@@ -210,9 +231,16 @@
 			files = (
 				59C026B01FF6EAFB00171CF8 /* Person.swift in Sources */,
 				59C026AE1FF6904600171CF8 /* PersonViewController.swift in Sources */,
+				59161B701FF80487008D9A49 /* ProjectViewController.swift in Sources */,
+				59161B721FF804B6008D9A49 /* ProjectCell.swift in Sources */,
 				59C026AA1FF68DB900171CF8 /* PersonCell.swift in Sources */,
 				59C026821FF5628600171CF8 /* ViewController.swift in Sources */,
+				59161B6A1FF7D670008D9A49 /* HideKeyBoard.swift in Sources */,
+				59161B741FF804C5008D9A49 /* Project.swift in Sources */,
 				59C026801FF5628600171CF8 /* AppDelegate.swift in Sources */,
+				59161B681FF717A1008D9A49 /* PersonEditViewController.swift in Sources */,
+				59161B761FF80C0C008D9A49 /* ProjectEditViewController.swift in Sources */,
+				59161B6E1FF7E895008D9A49 /* PersonAddViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +394,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M33UH56J5S;
 				INFOPLIST_FILE = pms05/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = x.pms05;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -380,7 +410,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M33UH56J5S;
 				INFOPLIST_FILE = pms05/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = x.pms05;
 				PRODUCT_NAME = "$(TARGET_NAME)";

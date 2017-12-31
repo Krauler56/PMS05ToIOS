@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet var passwordfield: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -34,7 +35,7 @@ class ViewController: UIViewController {
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // create post request
-        let url = URL(string: "http://localhost:8888/auth")!
+        let url = URL(string: "http://pms5.herokuapp.com/auth")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         

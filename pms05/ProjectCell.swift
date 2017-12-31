@@ -1,17 +1,18 @@
 //
-//  Person.swift
+//  ProjectCell.swift
 //  pms05
 //
-//  Created by Пользователь on 29.12.2017.
+//  Created by Пользователь on 30.12.2017.
 //  Copyright © 2017 Пользователь. All rights reserved.
 //
 
 import UIKit
 
-class PersonCell: UITableViewCell {
-   
+
+class ProjectCell: UITableViewCell {
     
-    @IBOutlet weak var firstname: UILabel!
+    
+    @IBOutlet weak var name: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,3 +24,4 @@ class PersonCell: UITableViewCell {
         // Configure the view for the selected state
     }
 }
+
