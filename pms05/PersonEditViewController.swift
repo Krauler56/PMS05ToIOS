@@ -25,10 +25,10 @@ class PersonEditViewController: UIViewController {
         firstname.text=person?.firstName
         lastname.text=person?.lastName
         email.text=person?.email
-        isadministrator.isOn=(person?.roles.contains("A"))!
-        ismanager.isOn=(person?.roles.contains("M"))!
-        issupermanager.isOn=(person?.roles.contains("S"))!
-        isworker.isOn=(person?.roles.contains("W"))!
+        isadministrator.isOn=(person?.roles?.contains("A"))!
+        ismanager.isOn=(person?.roles?.contains("M"))!
+        issupermanager.isOn=(person?.roles?.contains("S"))!
+        isworker.isOn=(person?.roles?.contains("W"))!
         // Do any additional setup after loading the view.
     }
 

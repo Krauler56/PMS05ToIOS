@@ -1,37 +1,34 @@
 //
-//  ProjectEditViewController.swift
+//  ProjectAddViewController.swift
 //  pms05
 //
-//  Created by Пользователь on 30.12.2017.
-//  Copyright © 2017 Пользователь. All rights reserved.
+//  Created by Пользователь on 01.01.2018.
+//  Copyright © 2018 Пользователь. All rights reserved.
 //
 
 import UIKit
 
-class ProjectEditViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
-    var project :Project?
+class ProjectAddViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
+    
+    @IBOutlet weak var AddProjectLabel: UILabel!
+    @IBOutlet weak var projectname: UITextField!
+    @IBOutlet weak var desc: UITextField!
+    @IBOutlet weak var tableView: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return persons.count
     }
     
-    @IBOutlet weak var EditAddProjectLabel: UILabel!
-    @IBOutlet weak var projectname: UITextField!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var desc: UITextField!
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier:
             "PersonCell") as? PersonCell else {return UITableViewCell()}
         cell.firstname.text=persons[indexPath.row].firstName!+" "+persons[indexPath.row].lastName!
-        if project?.manager![0]._id==persons[indexPath.row]._id
-        {
-            selectedIndex=indexPath.row
+        if(indexPath.row==0){
             cell.backgroundColor=UIColor.red
         }
-        else
-        {
+        else{
             cell.backgroundColor=UIColor.blue
         }
-        return cell
+            return cell
     }
     var selectedIndex:Int = 0
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -45,13 +42,11 @@ class ProjectEditViewController: UIViewController ,UITableViewDataSource,UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        projectname.text=project?.name
-        desc.text=project?.description
         tableView.delegate=self
         tableView.dataSource=self
         tableView.reloadData()
         self.hideKeyboardWhenTappedAround()
-        EditAddProjectLabel.text="Edit project "+(project?.name)!
+        AddProjectLabel.text="Add project"
         
         // Do any additional setup after loading the view.
     }
@@ -61,35 +56,41 @@ class ProjectEditViewController: UIViewController ,UITableViewDataSource,UITable
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func submitChanges(_ sender: Any) {
-        var personsarray = [Person]()
-        personsarray.append(persons[selectedIndex] )
-        project?.setNameDescManager(name: projectname.text!, description: desc.text!, manager: personsarray)
+    
+    
+    func save() {
+        let json: [String: Any] = ["name" : projectname.text!,"description" : desc.text!,"managerId" : persons[selectedIndex]._id]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        print("JSONDATA"+String(describing: jsonData))
+        // create post request
+        let url = URL(string: "http://pms5.herokuapp.com/db/projects/json")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        // insert json data to the request
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                
+                print(responseJSON)
+            }
+        }
+        task.resume()
+        
+    }
+    
+    @IBAction func addNewProject(_ sender: Any) {
         save()
     }
     
-    func save() {
-        // ...
-        let todosURL = URL(string: "http://pms5.herokuapp.com/db/projects/"+(project?._id)!)
-        var todosUrlRequest = URLRequest(url: todosURL!)
-        todosUrlRequest.httpMethod = "PUT"
-        
-        let encoder = JSONEncoder()
-        do {
-            let newTodoAsJSON = try encoder.encode(project)
-            todosUrlRequest.httpBody = newTodoAsJSON
-        } catch {
-            print("ERROR WITH HTTP PUT PROJECT")
-        }
-        
-        // ...
-        let session = URLSession.shared
-        let task = session.dataTask(with: todosUrlRequest, completionHandler: {
-            (data, response, error) in
-            // ...
-        })
-        task.resume()
-    }
+    
     /*
      // MARK: - Navigation
      

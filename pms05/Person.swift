@@ -15,12 +15,12 @@ class Persons:Codable{
     }
 }
 class Person:Codable{
-    let _id :String
-    let firstName:String
-    let lastName:String
-    let email:String
-    let password :String
-    let roles:String
+    let _id :String?
+    let firstName:String?
+    let lastName:String?
+    let email:String?
+    let password :String?
+    let roles:String?
     init (_id:String,firstName:String,lastName:String,email:String,password:String,roles:String)
     {
         self._id=_id

@@ -1,85 +1,78 @@
-//
-//  ProjectViewController.swift
-//  pms05
-//
-//  Created by Пользователь on 30.12.2017.
-//  Copyright © 2017 Пользователь. All rights reserved.
-//
 
 import UIKit
-var projects = [Project]()
-var selectedIdOfProject:String="5a4a5f515918ce0014ff4736"
-class ProjectViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
-
+var tasks = [Task]()
+var projectRowNum:Int = 0
+class TaskViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
+    
+    
     @IBOutlet weak var tableView: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return projects.count
+        return tasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier:
-            "ProjectCell") as? ProjectCell else {return UITableViewCell()}
-        cell.name.text=projects[indexPath.row].name
+            "TaskCell") as? TaskCell else {return UITableViewCell()}
+        print("HELLOWORLD")
+        cell.taskDescLabel.text=tasks[indexPath.row].description
         return cell
     }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        downloadJson()
+        tableView.delegate=self
+        tableView.dataSource=self
+        self.tableView.reloadData()
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showProjectDetails", sender: self)
+        performSegue(withIdentifier: "showTask", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let destination = segue.destination as? ProjectEditViewController{
-            destination.project = projects[(tableView.indexPathForSelectedRow?.row)!]
+        if let destination = segue.destination as? TaskEditViewController{
+            destination._task = tasks[(tableView.indexPathForSelectedRow?.row)!]
         }
         
-        
     }
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidLoad() {
         
+        super.viewDidLoad()
+        downloadJson()
         tableView.delegate=self
         tableView.dataSource=self
-        tableView.reloadData()
-        downloadJson()
+        self.tableView.reloadData()
     }
     
-    override func viewDidLoad() {
-      
-        super.viewDidLoad()
-        tableView.delegate=self
-        tableView.dataSource=self
-        tableView.reloadData()
-        downloadJson()
-        // Do any additional setup after loading the view.
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    final let url = URL(string : "http://pms5.herokuapp.com/db/projects")
+    
     func downloadJson(){
+        var url = URL(string : "http://pms5.herokuapp.com/db/tasks/projectId="+selectedIdOfProject)
         guard let downloadURL = url else {return}
         URLSession.shared.dataTask(with: downloadURL){data,URLResponse,error in
             guard let data = data, error == nil, URLResponse != nil else {
                 print("something is wrong")
                 return
             }
-            print("DOWNLOADED-PROJECTS")
+            print(url)
             do
             {
                 let decoder = JSONDecoder()
-                let dowloadedprojects = try decoder.decode([Project].self, from: data)
-                projects=dowloadedprojects
+                let dowloadedtasks = try decoder.decode([Task].self, from: data)
+                tasks=dowloadedtasks
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
-            }catch
+            }catch let error
             {
-                print("something wrong after" )
+                print(error)
             }
             }.resume()
         
@@ -87,17 +80,12 @@ class ProjectViewController: UIViewController ,UITableViewDataSource,UITableView
     
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        selectedIdOfProject=projects[indexPath.row]._id!
-        let shareAction = UITableViewRowAction(style: UITableViewRowActionStyle.normal,title:"Look tasks"){(action,indexPath)->Void in
-            self.performSegue(withIdentifier: "lookTasks", sender: self)
-            self.isEditing = false
-            projectRowNum=indexPath.row
-        }
+        
         let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default,title:"Delete"){(action,indexPath)->Void in
             self.isEditing = false
             tableView.beginUpdates()
-            let url = URL(string: "http://pms5.herokuapp.com/db/projects/"+projects[indexPath.row]._id!)
-            print("DElete project"+projects[indexPath.row].name!)
+            let url = URL(string: "http://pms5.herokuapp.com/db/tasks/"+tasks[indexPath.row]._id!)
+            print("DElete task"+tasks[indexPath.row].description!)
             var request = URLRequest(url: url!)
             request.httpMethod = "DELETE"
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -113,20 +101,21 @@ class ProjectViewController: UIViewController ,UITableViewDataSource,UITableView
             tableView.endUpdates()
             
         }
-        return [shareAction,deleteAction]
+        return [deleteAction]
     }
     
-
+    
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
+

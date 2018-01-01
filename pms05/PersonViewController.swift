@@ -17,7 +17,7 @@ class PersonViewController: UIViewController ,UITableViewDataSource,UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier:
             "PersonCell") as? PersonCell else {return UITableViewCell()}
-        cell.firstname.text=persons[indexPath.row].firstName+" "+persons[indexPath.row].lastName
+        cell.firstname.text=persons[indexPath.row].firstName!+" "+persons[indexPath.row].lastName!
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -26,8 +26,8 @@ class PersonViewController: UIViewController ,UITableViewDataSource,UITableViewD
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         tableView.beginUpdates()
         if (editingStyle == .delete){
-            let url = URL(string: "http://pms5.herokuapp.com/db/persons/"+persons[indexPath.row]._id)
-            print("DElete person"+persons[indexPath.row].lastName)
+            let url = URL(string: "http://pms5.herokuapp.com/db/persons/"+persons[indexPath.row]._id!)
+            print("DElete person"+persons[indexPath.row].lastName!)
             var request = URLRequest(url: url!)
             request.httpMethod = "DELETE"
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
