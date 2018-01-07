@@ -19,6 +19,10 @@
 		59161B7C1FFA6F35008D9A49 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B7B1FFA6F35008D9A49 /* TaskViewController.swift */; };
 		59161B7E1FFA6F72008D9A49 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B7D1FFA6F72008D9A49 /* TaskCell.swift */; };
 		59161B801FFAAE36008D9A49 /* TaskEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B7F1FFAAE35008D9A49 /* TaskEditViewController.swift */; };
+		59161B831FFD267D008D9A49 /* icons8-user-male-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 59161B821FFD267D008D9A49 /* icons8-user-male-48.png */; };
+		59161B851FFD2B63008D9A49 /* TaskAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59161B841FFD2B63008D9A49 /* TaskAddViewController.swift */; };
+		59161B871FFD8596008D9A49 /* man-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 59161B861FFD8595008D9A49 /* man-7.png */; };
+		59161B891FFD85E9008D9A49 /* file-list-tick-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 59161B881FFD85E9008D9A49 /* file-list-tick-7.png */; };
 		59C026801FF5628600171CF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C0267F1FF5628600171CF8 /* AppDelegate.swift */; };
 		59C026821FF5628600171CF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C026811FF5628600171CF8 /* ViewController.swift */; };
 		59C026851FF5628600171CF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59C026831FF5628600171CF8 /* Main.storyboard */; };
@@ -53,6 +57,10 @@
 		59161B7B1FFA6F35008D9A49 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		59161B7D1FFA6F72008D9A49 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		59161B7F1FFAAE35008D9A49 /* TaskEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditViewController.swift; sourceTree = "<group>"; };
+		59161B821FFD267D008D9A49 /* icons8-user-male-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-user-male-48.png"; path = "../../../Downloads/icons8-user-male-48.png"; sourceTree = "<group>"; };
+		59161B841FFD2B63008D9A49 /* TaskAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAddViewController.swift; sourceTree = "<group>"; };
+		59161B861FFD8595008D9A49 /* man-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "man-7.png"; path = "../../../Desktop/iconbeast-lite-200/iconbeast lite 200 - png/man-7.png"; sourceTree = "<group>"; };
+		59161B881FFD85E9008D9A49 /* file-list-tick-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "file-list-tick-7.png"; path = "../../../Desktop/iconbeast-lite-200/iconbeast lite 200 - png/file-list-tick-7.png"; sourceTree = "<group>"; };
 		59C0267C1FF5628600171CF8 /* pms05.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pms05.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59C0267F1FF5628600171CF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59C026811FF5628600171CF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +94,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59161B811FFD2655008D9A49 /* images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		59C026731FF5628600171CF8 = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +122,10 @@
 		59C0267E1FF5628600171CF8 /* pms05 */ = {
 			isa = PBXGroup;
 			children = (
+				59161B811FFD2655008D9A49 /* images */,
+				59161B821FFD267D008D9A49 /* icons8-user-male-48.png */,
+				59161B861FFD8595008D9A49 /* man-7.png */,
+				59161B881FFD85E9008D9A49 /* file-list-tick-7.png */,
 				59C0267F1FF5628600171CF8 /* AppDelegate.swift */,
 				59C026811FF5628600171CF8 /* ViewController.swift */,
 				59C026831FF5628600171CF8 /* Main.storyboard */,
@@ -128,6 +147,7 @@
 				59161B7B1FFA6F35008D9A49 /* TaskViewController.swift */,
 				59161B7D1FFA6F72008D9A49 /* TaskCell.swift */,
 				59161B7F1FFAAE35008D9A49 /* TaskEditViewController.swift */,
+				59161B841FFD2B63008D9A49 /* TaskAddViewController.swift */,
 			);
 			path = pms05;
 			sourceTree = "<group>";
@@ -227,6 +247,9 @@
 				59C0268A1FF5628600171CF8 /* LaunchScreen.storyboard in Resources */,
 				59C026871FF5628600171CF8 /* Assets.xcassets in Resources */,
 				59C026851FF5628600171CF8 /* Main.storyboard in Resources */,
+				59161B831FFD267D008D9A49 /* icons8-user-male-48.png in Resources */,
+				59161B891FFD85E9008D9A49 /* file-list-tick-7.png in Resources */,
+				59161B871FFD8596008D9A49 /* man-7.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +276,7 @@
 				59C026821FF5628600171CF8 /* ViewController.swift in Sources */,
 				59161B801FFAAE36008D9A49 /* TaskEditViewController.swift in Sources */,
 				59161B6A1FF7D670008D9A49 /* HideKeyBoard.swift in Sources */,
+				59161B851FFD2B63008D9A49 /* TaskAddViewController.swift in Sources */,
 				59161B741FF804C5008D9A49 /* Project.swift in Sources */,
 				59C026801FF5628600171CF8 /* AppDelegate.swift in Sources */,
 				59161B681FF717A1008D9A49 /* PersonEditViewController.swift in Sources */,

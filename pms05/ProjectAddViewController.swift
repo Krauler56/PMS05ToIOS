@@ -23,10 +23,10 @@ class ProjectAddViewController: UIViewController ,UITableViewDataSource,UITableV
             "PersonCell") as? PersonCell else {return UITableViewCell()}
         cell.firstname.text=persons[indexPath.row].firstName!+" "+persons[indexPath.row].lastName!
         if(indexPath.row==0){
-            cell.backgroundColor=UIColor.red
+           // cell.backgroundColor=UIColor.red
         }
         else{
-            cell.backgroundColor=UIColor.blue
+           // cell.backgroundColor=UIColor.blue
         }
             return cell
     }
@@ -35,8 +35,8 @@ class ProjectAddViewController: UIViewController ,UITableViewDataSource,UITableV
         let ind = IndexPath(row:selectedIndex,section:0)
         var cellOld:UITableViewCell = tableView.cellForRow(at: ind)!
         var cellNew:UITableViewCell = tableView.cellForRow(at: indexPath)!
-        cellNew.contentView.backgroundColor=UIColor.red
-        cellOld.contentView.backgroundColor=UIColor.blue
+       // cellNew.contentView.backgroundColor=UIColor.red
+        //cellOld.contentView.backgroundColor=UIColor.blue
         selectedIndex=indexPath.row
     }
     

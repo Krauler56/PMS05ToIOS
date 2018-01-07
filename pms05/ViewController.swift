@@ -7,13 +7,15 @@
 //
 
 import UIKit
-
+var loggedPerson :Person?
 class ViewController: UIViewController {
-
+    //let loginPerson:Person
     @IBOutlet var loginfield: UITextField!
     @IBOutlet var passwordfield: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.tabBarController?.tabBar.isHidden=true
         self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -26,6 +28,15 @@ class ViewController: UIViewController {
     @IBAction func loginaction(_ sender: Any) {
         DoLogin(_user: loginfield.text!, _psw: passwordfield.text!)
         
+    }
+    func createAlert(titleText : String,messageText : String)
+    {
+        let alert = UIAlertController(title: titleText, message : messageText,preferredStyle:.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+            
+        alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert,animated: true,completion: nil)
     }
     func DoLogin(_user:String,_psw:String)
     {
@@ -47,14 +58,40 @@ class ViewController: UIViewController {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            do
+            {
+                let decoder = JSONDecoder()
+                let prs = try decoder.decode(Person.self, from: data)
+                loggedPerson=prs
+                if(loggedPerson?.firstName==nil)
+                {
+                    print("BAD LOGIN")
+                    self.createAlert(titleText: "Error", messageText: "Bad e-mail or password")
+                }
+                else
+                {
+                     self.performSegue(withIdentifier: "loginSeg", sender: self)
+                }
+            }catch let error
+            {
+                print(error)
+            }
+           /* let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
                 
-                print(responseJSON)
-            }
+                if(String(describing: responseJSON)=="[:]"){
+                    print("BAD LOGIN")
+                    self.createAlert(titleText: "Error", messageText: "Bad e-mail or password")
+                }
+                else
+                {
+                    self.performSegue(withIdentifier: "loginSeg", sender: self)
+                }
+            }*/
         }
         task.resume()
     }
+    
     
 }
 

@@ -6,17 +6,17 @@
 //  Copyright © 2018 Пользователь. All rights reserved.
 import UIKit
 
-class TaskEditViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+class TaskAddViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
-
+    
     var _task :Task?
     
-    @IBOutlet weak var descLabel: UITextField!
     
+    @IBOutlet weak var descLabel: UITextField!
     @IBOutlet weak var projectPickerVIewOutlet: UIPickerView!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var DatePicker: UIDatePicker!
+    @IBOutlet weak var dateLabel: UILabel!
     var selectedIndexes:[Int] = [] {
         didSet{
             var uniqueValues = [Int]()
@@ -30,36 +30,27 @@ class TaskEditViewController: UIViewController ,UITableViewDataSource,UITableVie
             selectedIndexes = uniqueValues
         }
     }
-   
+    var selectedIndexOfProject:Int=0
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier:
             "PersonCell") as? PersonCell else {return UITableViewCell()}
         cell.firstname.text=persons[indexPath.row].firstName!+" "+persons[indexPath.row].lastName!
-        if (_task?.workersIds?.contains(persons[indexPath.row]._id!))!{
-            selectedIndexes.append(indexPath.row)
-             self.tableView.selectRow(at:  IndexPath(row: indexPath.row, section: 0), animated: false, scrollPosition: .none)
-        }
-            else{
-           // selectedIndexes.remove(at: indexPath.row)
-            }
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return persons.count
     }
     @IBAction func datePickerAction(_ sender: Any) {
-        setDate()
+           setDate()
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var cell = tableView.cellForRow(at: indexPath)
-        //if(_task?.workersIds?.contains(persons[indexPath.row]._id!))!{
-            selectedIndexes.append(indexPath.row)
-       // }
+        selectedIndexes.append(indexPath.row)
+        print("DZIALA")
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
         selectedIndexes.remove(at: selectedIndexes.index(of: indexPath.row)!)
-        
+        print("Na pewno")
     }
     func numberOfComponents(in projectPickerView: UIPickerView) -> Int {
         return 1
@@ -92,13 +83,15 @@ class TaskEditViewController: UIViewController ,UITableViewDataSource,UITableVie
     }
     func getSelectedPersonsIds()->[String]
     {
+        //let rows = tableView.indexPathsForSelectedRows?.map{$0.row}//.flatMap{Array(repeating: String($0), count:1)}//Rzutowanie [Int]->[String]
         var rowsOfPersons = [String]()
+        //rowsOfPersons=(_task?.workersIds)!
         for index in 0...persons.count
         {
             if(selectedIndexes.contains(index))
-                {
-                    rowsOfPersons.append(persons[index]._id!)
-                }
+            {
+                rowsOfPersons.append(persons[index]._id!)
+            }
         }
         
         
@@ -108,18 +101,14 @@ class TaskEditViewController: UIViewController ,UITableViewDataSource,UITableVie
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        projectPickerView.delegate = self
-        projectPickerView.dataSource = self
+        projectPickerVIewOutlet.delegate = self
+        projectPickerVIewOutlet.dataSource = self
         tableView.delegate=self
         tableView.dataSource=self
         tableView.reloadData()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        DatePicker.date=dateFormatter.date(from: (_task?.deadline)!)!
         setDate()
         projectPickerVIewOutlet.selectRow(projectRowNum, inComponent: 0, animated: true)
-        descLabel.text=_task?.description
+        let dateFormatter = DateFormatter()
         self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view.
     }
@@ -129,30 +118,34 @@ class TaskEditViewController: UIViewController ,UITableViewDataSource,UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func editTaskAction(_ sender: Any) {
+    @IBAction func addTask(_ sender: Any) {
         save()
     }
+    
     func save() {
-        let todosURL = URL(string: "http://pms5.herokuapp.com/db/tasks/"+(_task?._id)!)
-        var todosUrlRequest = URLRequest(url: todosURL!)
-        todosUrlRequest.httpMethod = "PUT"
+        let json: [String: Any] = ["status":0,"projectId" : projects[projectPickerVIewOutlet.selectedRow(inComponent: 0)]._id,"description" : descLabel.text!,"deadline" : getDateToTaskEdit() , "workersIds" : getSelectedPersonsIds()]
         
-        let encoder = JSONEncoder()
-        do {
-            let tasktoedit :TaskToEdit=TaskToEdit(_id: (_task?._id)!, status: (_task?.status)!, managerId: (_task?.managerId)!, deadline: getDateToTaskEdit(), description: (descLabel.text)!, workersIds:getSelectedPersonsIds(), projectId: projects[selectedIndexOfProject]._id!)
-            let newTodoAsJSON = try encoder.encode(tasktoedit)
-            todosUrlRequest.httpBody = newTodoAsJSON
-            
-        } catch let error{
-            print(error)
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        print("JSONDATA"+String(describing: jsonData))
+        // create post request
+        let url = URL(string: "http://pms5.herokuapp.com/db/tasks/json")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        // insert json data to the request
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                
+                print(responseJSON)
+            }
         }
-        
-        // ...
-        let session = URLSession.shared
-        let task = session.dataTask(with: todosUrlRequest, completionHandler: {
-            (data, response, error) in
-            // ...
-        })
         task.resume()
         
     }
@@ -168,3 +161,4 @@ class TaskEditViewController: UIViewController ,UITableViewDataSource,UITableVie
      */
     
 }
+

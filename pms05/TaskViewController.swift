@@ -13,7 +13,6 @@ class TaskViewController: UIViewController ,UITableViewDataSource,UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier:
             "TaskCell") as? TaskCell else {return UITableViewCell()}
-        print("HELLOWORLD")
         cell.taskDescLabel.text=tasks[indexPath.row].description
         return cell
     }
@@ -23,6 +22,10 @@ class TaskViewController: UIViewController ,UITableViewDataSource,UITableViewDel
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewDidLoad()
+        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action:#selector(self.RightSideBarButtonItemTapped(_:)))
+        self.navigationItem.rightBarButtonItem=button
+        self.navigationItem.title="Tasks of "+selectedNameOfProject
         downloadJson()
         tableView.delegate=self
         tableView.dataSource=self
@@ -39,9 +42,16 @@ class TaskViewController: UIViewController ,UITableViewDataSource,UITableViewDel
         }
         
     }
+    @objc func RightSideBarButtonItemTapped(_ sender:UIBarButtonItem!)
+    {
+         self.performSegue(withIdentifier: "addTask", sender: self)
+    }
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action:#selector(self.RightSideBarButtonItemTapped(_:)))
+        self.navigationItem.rightBarButtonItem=button
+         self.navigationItem.title="Tasks"
         downloadJson()
         tableView.delegate=self
         tableView.dataSource=self
@@ -96,13 +106,15 @@ class TaskViewController: UIViewController ,UITableViewDataSource,UITableViewDel
                 
             }
             task.resume()
-            projects.remove(at: indexPath.row)
+            tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .middle)
             tableView.endUpdates()
             
         }
+        
         return [deleteAction]
     }
+    
     
     
     

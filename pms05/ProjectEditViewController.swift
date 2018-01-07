@@ -25,11 +25,12 @@ class ProjectEditViewController: UIViewController ,UITableViewDataSource,UITable
         if project?.manager![0]._id==persons[indexPath.row]._id
         {
             selectedIndex=indexPath.row
-            cell.backgroundColor=UIColor.red
+            self.tableView.selectRow(at:  IndexPath(row: indexPath.row, section: 0), animated: false, scrollPosition: .none)
+          //  cell.backgroundColor=UIColor.red
         }
         else
         {
-            cell.backgroundColor=UIColor.blue
+         //   cell.backgroundColor=UIColor.blue
         }
         return cell
     }
@@ -38,8 +39,8 @@ class ProjectEditViewController: UIViewController ,UITableViewDataSource,UITable
         let ind = IndexPath(row:selectedIndex,section:0)
         var cellOld:UITableViewCell = tableView.cellForRow(at: ind)!
         var cellNew:UITableViewCell = tableView.cellForRow(at: indexPath)!
-        cellNew.contentView.backgroundColor=UIColor.red
-        cellOld.contentView.backgroundColor=UIColor.blue
+        //cellNew.contentView.backgroundColor=UIColor.red
+        //cellOld.contentView.backgroundColor=UIColor.blue
         selectedIndex=indexPath.row
     }
     

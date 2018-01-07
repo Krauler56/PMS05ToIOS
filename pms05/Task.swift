@@ -37,8 +37,23 @@ class Task :Codable
         self.workers=workers
         self.dependsOn=dependsOn
     }
-
+    func removeWorkerId(workerId:String)
+    {
+        if(workersIds?.contains(workerId))!
+        {
+        workersIds?.remove(at: (workersIds?.index(of: workerId))!)
+        }
+    }
+    func addWorkerId(workerId:String)
+    {
+        workersIds?.append(workerId)
+    }
+    func getProjectName()->String
+    {
+        return project![0].name
+    }
 }
+
 class TaskToEdit:Codable
 {
     var _id:String?
@@ -48,8 +63,7 @@ class TaskToEdit:Codable
     var description:String?
     var workersIds:[String]?
     var projectId:String?
-    init(_id:String,projectId:String,description:String,workersIds:[String],deadline:String,
-         status:Int,managerId:[String])
+    init(_id:String,status:Int,managerId:[String],deadline:String,description:String,workersIds:[String],projectId:String)
     {
         self._id=_id
         self.status=status

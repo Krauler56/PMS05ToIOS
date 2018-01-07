@@ -8,7 +8,9 @@
 
 import UIKit
 var projects = [Project]()
-var selectedIdOfProject:String="5a4a5f515918ce0014ff4736"
+var selectedIdOfProject:String=""
+var selectedNameOfProject:String=""
+var selectedIndexOfProject:Int=0
 class ProjectViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
 
     @IBOutlet weak var tableView: UITableView!
@@ -27,13 +29,17 @@ class ProjectViewController: UIViewController ,UITableViewDataSource,UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showProjectDetails", sender: self)
+         selectedIdOfProject=projects[indexPath.row]._id!
+        selectedNameOfProject=projects[indexPath.row].name!
+        selectedIndexOfProject=indexPath.row
+          projectRowNum=indexPath.row
+        performSegue(withIdentifier: "lookTasks", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let destination = segue.destination as? ProjectEditViewController{
-            destination.project = projects[(tableView.indexPathForSelectedRow?.row)!]
+            destination.project = projects[projectRowNum]
         }
         
         
@@ -45,10 +51,16 @@ class ProjectViewController: UIViewController ,UITableViewDataSource,UITableView
         tableView.reloadData()
         downloadJson()
     }
-    
+    @objc func RightSideBarButtonItemTapped(_ sender:UIBarButtonItem!)
+    {
+        self.performSegue(withIdentifier: "addProject", sender: self)
+    }
     override func viewDidLoad() {
       
         super.viewDidLoad()
+        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action:#selector(self.RightSideBarButtonItemTapped(_:)))
+        self.navigationItem.rightBarButtonItem=button
+         self.navigationItem.title="Projects"
         tableView.delegate=self
         tableView.dataSource=self
         tableView.reloadData()
@@ -89,9 +101,9 @@ class ProjectViewController: UIViewController ,UITableViewDataSource,UITableView
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         selectedIdOfProject=projects[indexPath.row]._id!
         let shareAction = UITableViewRowAction(style: UITableViewRowActionStyle.normal,title:"Look tasks"){(action,indexPath)->Void in
-            self.performSegue(withIdentifier: "lookTasks", sender: self)
-            self.isEditing = false
             projectRowNum=indexPath.row
+            self.performSegue(withIdentifier: "showProjectDetails", sender: self)
+            self.isEditing = false
         }
         let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default,title:"Delete"){(action,indexPath)->Void in
             self.isEditing = false
